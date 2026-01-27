@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interior Archive</title>
+    <style>
+        /* 1. 기본 스타일 (Cosmos 스타일: 블랙 & 미니멀) */
+        body, html { margin: 0; padding: 0; font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #111; color: #fff; scroll-behavior: smooth;}
+        a { text-decoration: none; color: white; }
+
+        /* 2. 랜딩 페이지 (풀스크린 & 랜덤 배경) */
+        #landing {
+            height: 100vh; /* 화면 전체 높이 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        /* 배경 어둡게 처리 (글씨 잘 보이게) */
+        #landing::before {
+            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.4);
+        }
+        .landing-content { position: relative; z-index: 1; text-align: center; }
+        .logo { font-size: 3rem; font-weight: bold; letter-spacing: -1px; margin-bottom: 20px;}
+        .scroll-btn {
+            margin-top: 30px; padding: 10px 30px; border: 1px solid white; border-radius: 30px;
+            cursor: pointer; transition: 0.3s;
+        }
+        .scroll-btn:hover { background: white; color: black; }
+
+        /* 3. 필터 카테고리 (상단 고정) */
+        #filter-bar {
+            position: sticky; top: 0; background: #111; z-index: 100;
+            padding: 20px; display: flex; gap: 10px; overflow-x: auto;
+            border-bottom: 1px solid #333;
+        }
+        .filter-btn {
+            background: #222; color: #aaa; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; white-space: nowrap;
+        }
+        .filter-btn:hover, .filter-btn.active { background: #fff; color: #000; }
+
+        /* 4. 디스커버 그리드 (벽돌 쌓기 레이아웃) */
+        #discover { padding: 20px; max-width: 1600px; margin: 0 auto; }
+        .masonry-grid {
+            column-count: 4; /* PC에서는 4열 */
+            column-gap: 15px;
+        }
+        .grid-item {
+            display: inline-block; width: 100%; margin-bottom: 15px;
+            background: #222; border-radius: 8px; overflow: hidden;
+            break-inside: avoid; /* 이미지가 잘리지 않게 */
+            cursor: pointer;
+        }
+        .grid-item img { width: 100%; display: block; height: auto; transition: 0.3s;}
+        .grid-item:hover img { opacity: 0.8; }
+        .item-info { padding: 15px; }
+        .item-title { font-size: 0.9rem; font-weight: bold; margin-bottom: 5px; }
+        .item-tags { font-size: 0.75rem; color: #888; }
+
+        /* 모바일 대응 */
+        @media (max-width: 768px) {
+            .masonry-grid { column-count: 2; } /* 모바일은 2열 */
+            .logo { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <section id="landing">
+        <div class="landing-content">
+            <div class="logo">Sconee Archive</div>
+            <p>Curated Interior Inspiration</p>
+            <div class="scroll-btn" onclick="document.getElementById('discover').scrollIntoView()">Discover</div>
+        </div>
+    </section>
+
+    <nav id="filter-bar">
+        <button class="filter-btn active">All</button>
+        <button class="filter-btn">Style</button>
+        <button class="filter-btn">Color</button>
+        <button class="filter-btn">Space</button>
+        <button class="filter-btn">Material</button>
+        <button class="filter-btn">Country</button>
+    </nav>
+
+    <section id="discover">
+        <div class="masonry-grid" id="grid-container">
+            </div>
+    </section>
+
+    <script>
+        // 1. 랜딩 페이지 랜덤 이미지 설정
+        const heroImages = [
+            'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=80', // 모던
+            'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=80', // 럭셔리
+            'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&q=80', // 미니멀
+            'https://images.unsplash.com/photo-1616486338812-3dadae4b4f9d?auto=format&fit=crop&w=1600&q=80'  // 우드
+        ];
+        
+        const randomImg = heroImages[Math.floor(Math.random() * heroImages.length)];
+        document.getElementById('landing').style.backgroundImage = `url('${randomImg}')`;
+
+        // 2. 가상의 데이터 (나중엔 파이썬이 만들어줄 데이터)
+        const mockData = [
+            { title: "Minimalist Concrete Hotel", tags: "Hotel | Grey | Japan", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=500" },
+            { title: "Warm Wood Cafe", tags: "Cafe | Wood | Korea", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=500" },
+            { title: "Industrial Office", tags: "Office | Steel | USA", img: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=500" },
+            { title: "Luxury Marble Hall", tags: "Lobby | White | Italy", img: "https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=500" },
+            { title: "Greenary Lounge", tags: "Lounge | Green | UK", img: "https://images.unsplash.com/photo-1617159265850-bc41e0a25227?w=500" },
+            { title: "Cozy Bedroom", tags: "Home | Beige | France", img: "https://images.unsplash.com/photo-1616594039964-40891a908175?w=500" },
+             { title: "Modern Kitchen", tags: "Home | Black | Germany", img: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=500" },
+            { title: "Art Gallery Space", tags: "Gallery | White | Spain", img: "https://images.unsplash.com/photo-1513161455079-7dc1de15ef12?w=500" },
+        ];
+
+        // 3. 그리드에 아이템 배치하기
+        const gridContainer = document.getElementById('grid-container');
+        
+        mockData.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'grid-item';
+            div.innerHTML = `
+                <img src="${item.img}" alt="${item.title}">
+                <div class="item-info">
+                    <div class="item-title">${item.title}</div>
+                    <div class="item-tags">${item.tags}</div>
+                </div>
+            `;
+            gridContainer.appendChild(div);
+        });
+    </script>
+</body>
+</html>
