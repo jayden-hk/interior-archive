@@ -9,7 +9,7 @@ from io import BytesIO
 # ==========================================
 # 1. 설정 (여기에 API 키를 넣으세요)
 # ==========================================
-API_KEY = "여기에_아까_복사한_AIza_키를_붙여넣으세요"
+API_KEY = "AIzaSyCxBoYiwaVpkFMkretVQH5qrg4HP1_ZPqo"
 genai.configure(api_key=API_KEY)
 
 # ==========================================
