@@ -1,146 +1,180 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sconee Archive</title>
     <style>
-        body, html { margin: 0; padding: 0; font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #111; color: #fff; scroll-behavior: smooth;}
-        a { text-decoration: none; color: white; }
+        body { margin: 0; padding: 0; background-color: #121212; color: #ffffff; font-family: 'Helvetica Neue', sans-serif; }
         
-        /* 로딩 애니메이션 */
-        #loading { text-align: center; padding: 50px; color: #555; }
+        header { 
+            height: 50vh; 
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+        }
+        h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 700; letter-spacing: 1px; }
+        p { font-size: 1.2rem; color: #cccccc; }
 
-        /* 랜딩 섹션 */
-        #landing {
-            height: 100vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background-size: cover; background-position: center; position: relative;
-            transition: background-image 1s ease-in-out;
-        }
-        #landing::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); }
-        .landing-content { position: relative; z-index: 1; text-align: center; }
-        .logo { font-size: 3rem; font-weight: bold; letter-spacing: -1px; margin-bottom: 10px;}
-        .sub-text { font-size: 1rem; color: #ccc; margin-bottom: 30px; }
-        .scroll-btn {
-            padding: 12px 30px; border: 1px solid white; border-radius: 30px;
-            cursor: pointer; transition: 0.3s; font-size: 0.9rem; letter-spacing: 1px;
-        }
-        .scroll-btn:hover { background: white; color: black; }
-
-        /* 필터 바 */
-        #filter-bar {
-            position: sticky; top: 0; background: rgba(17,17,17,0.95); z-index: 100;
-            padding: 15px 20px; display: flex; gap: 8px; overflow-x: auto;
-            border-bottom: 1px solid #222; backdrop-filter: blur(5px);
-        }
+        /* --- 3단 필터 스타일 --- */
+        .filter-section { padding: 20px 40px; background-color: #1a1a1a; border-bottom: 1px solid #333; }
+        .filter-row { display: flex; align-items: center; margin-bottom: 15px; flex-wrap: wrap; }
+        .filter-label { width: 80px; font-size: 0.8rem; color: #666; font-weight: bold; text-transform: uppercase; }
+        .filter-group { display: flex; gap: 8px; flex-wrap: wrap; }
+        
         .filter-btn {
-            background: #222; color: #888; border: 1px solid #333; padding: 6px 14px; 
-            border-radius: 20px; cursor: pointer; white-space: nowrap; font-size: 0.85rem; transition: 0.2s;
+            background: #333; border: 1px solid #444; color: #ccc;
+            padding: 6px 14px; border-radius: 15px; cursor: pointer; font-size: 0.85rem;
+            transition: all 0.2s ease;
         }
         .filter-btn:hover, .filter-btn.active { background: #fff; color: #000; border-color: #fff; }
 
-        /* 그리드 */
-        #discover { padding: 20px; max-width: 1600px; margin: 0 auto; }
-        .masonry-grid { column-count: 4; column-gap: 15px; }
-        .grid-item {
-            display: inline-block; width: 100%; margin-bottom: 15px;
-            background: #1a1a1a; border-radius: 8px; overflow: hidden;
-            break-inside: avoid; cursor: pointer; transition: transform 0.2s;
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px; padding: 40px;
         }
-        .grid-item:hover { transform: translateY(-3px); }
-        .grid-item img { width: 100%; display: block; height: auto; opacity: 0.9; transition: opacity 0.3s;}
-        .grid-item:hover img { opacity: 1; }
-        .item-info { padding: 15px; }
-        .item-title { font-size: 0.95rem; font-weight: 500; margin-bottom: 6px; color: #eee; }
-        .item-tags { font-size: 0.75rem; color: #666; font-weight: 300; }
-
-        @media (max-width: 1024px) { .masonry-grid { column-count: 3; } }
-        @media (max-width: 768px) { .masonry-grid { column-count: 2; } .logo { font-size: 2rem; } }
+        .gallery-item { background: #1e1e1e; border-radius: 8px; overflow: hidden; transition: transform 0.3s ease; }
+        .gallery-item:hover { transform: translateY(-5px); }
+        .gallery-item img { width: 100%; height: 250px; object-fit: cover; display: block; }
+        .info { padding: 15px; }
+        .info h3 { margin: 0 0 8px 0; font-size: 1.1rem; color: #fff; }
+        .tags-row { display: flex; gap: 6px; flex-wrap: wrap; }
+        .tag-badge { font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; color: #000; font-weight: 600; }
+        .tag-space { background-color: #a8d5e2; } /* 파란색: 공간 */
+        .tag-vibe { background-color: #e2a8a8; }  /* 빨간색: 분위기 */
+        .tag-detail { background-color: #dbe2a8; } /* 노란색: 디테일 */
     </style>
 </head>
 <body>
 
-    <section id="landing">
-        <div class="landing-content">
-            <div class="logo">Sconee Archive</div>
-            <div class="sub-text">Inspiration for Space & Design</div>
-            <div class="scroll-btn" onclick="document.getElementById('discover').scrollIntoView()">Explore Collection</div>
+    <header id="main-header">
+        <h1>Sconee Archive</h1>
+        <p>Curated Inspiration for Space & Design</p>
+    </header>
+
+    <div class="filter-section">
+        <div class="filter-row">
+            <span class="filter-label">Space</span>
+            <div class="filter-group" id="filter-space">
+                <button class="filter-btn active" onclick="filterGallery('space', 'all')">All</button>
+            </div>
         </div>
-    </section>
+        <div class="filter-row">
+            <span class="filter-label">Vibe</span>
+            <div class="filter-group" id="filter-vibe">
+                <button class="filter-btn active" onclick="filterGallery('vibe', 'all')">All</button>
+            </div>
+        </div>
+        <div class="filter-row">
+            <span class="filter-label">Detail</span>
+            <div class="filter-group" id="filter-detail">
+                <button class="filter-btn active" onclick="filterGallery('detail', 'all')">All</button>
+            </div>
+        </div>
+    </div>
 
-    <nav id="filter-bar">
-        <button class="filter-btn active" onclick="filterData('All')">All</button>
-        <button class="filter-btn" onclick="filterData('Hotel')">Hotel</button>
-        <button class="filter-btn" onclick="filterData('Office')">Office</button>
-        <button class="filter-btn" onclick="filterData('Home')">Home</button>
-        <button class="filter-btn" onclick="filterData('Wood')">Wood</button>
-        <button class="filter-btn" onclick="filterData('Modern')">Modern</button>
-    </nav>
-
-    <section id="discover">
-        <div id="loading">Loading inspiration...</div>
-        <div class="masonry-grid" id="grid-container"></div>
-    </section>
+    <div class="gallery-grid" id="gallery-grid"></div>
 
     <script>
         let allData = [];
+        let currentFilters = { space: 'all', vibe: 'all', detail: 'all' };
 
-        // 1. data.json 파일 불러오기 (핵심!)
         fetch('data.json')
             .then(response => response.json())
             .then(data => {
                 allData = data;
-                document.getElementById('loading').style.display = 'none';
-                renderGrid(allData);
-                setRandomHero(allData);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('loading').innerText = 'Failed to load data.';
+                if(data.length > 0) {
+                    document.getElementById('main-header').style.backgroundImage = 
+                        `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('${data[0].img}')`;
+                }
+                generateFilters(data);
+                renderGallery(data);
             });
 
-        // 2. 그리드 그리기 함수
-        function renderGrid(data) {
-            const container = document.getElementById('grid-container');
-            container.innerHTML = ''; // 초기화
+        function generateFilters(data) {
+            const spaces = new Set();
+            const vibes = new Set();
+            const details = new Set();
+
             data.forEach(item => {
+                // 새 데이터 형식(space/vibe/detail)과 옛날 형식(tags) 모두 처리
+                if (item.space) spaces.add(item.space);
+                if (item.vibe) vibes.add(item.vibe);
+                if (item.detail) details.add(item.detail);
+                
+                // 옛날 데이터(tags 문자열) 처리 - 대충 Space로 넣어줌
+                if (item.tags && !item.space) {
+                    item.tags.split('|').forEach(t => spaces.add(t.trim()));
+                }
+            });
+
+            createButtons('filter-space', spaces, 'space');
+            createButtons('filter-vibe', vibes, 'vibe');
+            createButtons('filter-detail', details, 'detail');
+        }
+
+        function createButtons(containerId, tagSet, type) {
+            const container = document.getElementById(containerId);
+            tagSet.forEach(tag => {
+                const btn = document.createElement('button');
+                btn.className = 'filter-btn';
+                btn.innerText = tag;
+                btn.onclick = (e) => {
+                    // 버튼 활성화 스타일
+                    container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    filterGallery(type, tag);
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        function filterGallery(type, value) {
+            currentFilters[type] = value; // 선택한 필터 저장
+
+            const filtered = allData.filter(item => {
+                // 3가지 조건이 모두 맞아야 함 (AND 조건)
+                const matchSpace = (currentFilters.space === 'all') || 
+                                   (item.space === currentFilters.space) || 
+                                   (item.tags && item.tags.includes(currentFilters.space));
+                
+                const matchVibe = (currentFilters.vibe === 'all') || 
+                                  (item.vibe === currentFilters.vibe);
+                
+                const matchDetail = (currentFilters.detail === 'all') || 
+                                    (item.detail === currentFilters.detail);
+
+                return matchSpace && matchVibe && matchDetail;
+            });
+
+            renderGallery(filtered);
+        }
+
+        function renderGallery(items) {
+            const grid = document.getElementById('gallery-grid');
+            grid.innerHTML = '';
+            
+            items.forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'grid-item';
+                div.className = 'gallery-item';
+                
+                // 태그 뱃지 만들기
+                let tagsHtml = '';
+                if(item.space) tagsHtml += `<span class="tag-badge tag-space">${item.space}</span>`;
+                if(item.vibe) tagsHtml += `<span class="tag-badge tag-vibe">${item.vibe}</span>`;
+                if(item.detail) tagsHtml += `<span class="tag-badge tag-detail">${item.detail}</span>`;
+                if(item.tags && !item.space) tagsHtml += `<span class="tag-badge tag-space">${item.tags}</span>`;
+
                 div.innerHTML = `
-                    <img src="${item.img}" alt="${item.title}" loading="lazy">
-                    <div class="item-info">
-                        <div class="item-title">${item.title}</div>
-                        <div class="item-tags">${item.tags}</div>
+                    <a href="${item.img}" target="_blank">
+                        <img src="${item.img}" alt="${item.title}" loading="lazy">
+                    </a>
+                    <div class="info">
+                        <h3>${item.title}</h3>
+                        <div class="tags-row">${tagsHtml}</div>
                     </div>
                 `;
-                container.appendChild(div);
+                grid.appendChild(div);
             });
-        }
-
-        // 3. 필터링 기능
-        function filterData(keyword) {
-            // 버튼 활성화 스타일 변경
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            if (keyword === 'All') {
-                renderGrid(allData);
-            } else {
-                const filtered = allData.filter(item => 
-                    item.tags.toLowerCase().includes(keyword.toLowerCase()) || 
-                    item.title.toLowerCase().includes(keyword.toLowerCase())
-                );
-                renderGrid(filtered);
-            }
-        }
-
-        // 4. 랜덤 배경 설정
-        function setRandomHero(data) {
-            if(data.length > 0) {
-                const randomItem = data[Math.floor(Math.random() * data.length)];
-                document.getElementById('landing').style.backgroundImage = `url('${randomItem.img}')`;
-            }
         }
     </script>
 </body>
