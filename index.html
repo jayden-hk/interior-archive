@@ -6,7 +6,7 @@
     <title>sconee Archive</title>
     <style>
         /* ==============================
-           1. 기본 스타일 (Dark Mode)
+           1. 기본 스타일
            ============================== */
         body { margin: 0; padding: 0; background-color: #121212; color: #ffffff; font-family: 'Helvetica Neue', sans-serif; }
         
@@ -23,7 +23,7 @@
         h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 700; letter-spacing: 1px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
 
-        /* 음악 위젯 컨테이너 */
+        /* 음악 위젯 */
         .music-widget {
             position: absolute; top: 20px; right: 30px;
             background: rgba(0, 0, 0, 0.6); 
@@ -33,7 +33,7 @@
             display: flex; gap: 20px; align-items: center;
         }
         
-        /* 장르 선택 버튼 (이모티콘 제거, 심플형) */
+        /* 장르 선택 버튼 */
         .music-mood-btns { display: flex; gap: 15px; }
         .mood-btn {
             background: transparent; border: none; color: #888;
@@ -63,7 +63,7 @@
         }
 
         /* ==============================
-           3. 3단 필터 영역
+           3. 3단 필터
            ============================== */
         .filter-section { padding: 30px 40px; background-color: #1a1a1a; border-bottom: 1px solid #333; }
         .filter-row { display: flex; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
@@ -145,12 +145,16 @@
 
     <script>
         // ============================================================
-        // 1. 유튜브 뮤직 설정 (ID가 이미 적용되어 있습니다)
+        // 1. 유튜브 뮤직 설정 (ID 위치 교체 완료!)
         // ============================================================
         const playlists = {
-            'jazz': 'PLxjckBrY2dKgyFDHw95kUds2DaCYJJzkY',    // 사장님의 Jazz ID
-            'chill': 'PLxjckBrY2dKjv04slgG3W39D0nyVdYYoK',   // 사장님의 Chill ID
-            'classic': 'PLxjckBrY2dKgh7NE23RMnP7GBOJsSR2Jf'  // 사장님의 Classic ID
+            'jazz': 'PLxjckBrY2dKgyFDHw95kUds2DaCYJJzkY',    
+            
+            // ⚠️ 수정됨: Chill 버튼에 아까 Classic이라고 하셨던 ID 할당
+            'chill': 'PLxjckBrY2dKgh7NE23RMnP7GBOJsSR2Jf',   
+
+            // ⚠️ 수정됨: Classic 버튼에 아까 Chill이라고 하셨던 ID 할당
+            'classic': 'PLxjckBrY2dKjv04slgG3W39D0nyVdYYoK'  
         };
 
         var tag = document.createElement('script');
@@ -180,7 +184,6 @@
             });
         }
 
-        // [핵심] 준비되면 셔플 켜고 -> 다음 곡으로 넘겨버리기 (개수 적어도 섞임)
         function onPlayerReady(event) {
             event.target.setShuffle({'shufflePlaylist': true});
             event.target.nextVideo(); 
@@ -189,7 +192,7 @@
         function onPlayerError(event) {
             console.error("Player Error:", event.data);
             updateButtonState(false);
-            if(event.data === 150 || event.data === 101) alert("🚫 재생 불가 (유튜브 설정 확인)");
+            if(event.data === 150 || event.data === 101) alert("🚫 재생 불가 (퍼가기 허용 필요)");
         }
 
         function onPlayerStateChange(event) {
@@ -215,7 +218,6 @@
             else player.playVideo();
         }
 
-        // [핵심] 장르 변경 로직
         function changeMood(mood, btnElement) {
             document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
             btnElement.classList.add('active');
@@ -228,8 +230,6 @@
                     'list': playlists[currentMood],
                     'listType': 'playlist'
                 });
-
-                // 리스트 로드 후 1초 뒤에 셔플 -> 다음 곡 (확실한 랜덤)
                 setTimeout(() => {
                     player.setShuffle({'shufflePlaylist': true});
                     player.nextVideo(); 
