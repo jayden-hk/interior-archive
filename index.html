@@ -8,113 +8,54 @@
         /* ==============================
            1. 기본 스타일
            ============================== */
-        body { 
-            margin: 0; 
-            padding: 0; 
-            background-color: #121212; 
-            color: #ffffff; 
-            font-family: 'Helvetica Neue', sans-serif; 
-        }
+        body { margin: 0; padding: 0; background-color: #121212; color: #ffffff; font-family: 'Helvetica Neue', sans-serif; }
         
         /* ==============================
-           2. 헤더 & 음악 위젯 (Clean Ver.)
+           2. 헤더 & 음악 위젯
            ============================== */
         header { 
             height: 50vh; 
-            background-size: cover; 
-            background-position: center;
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            text-align: center;
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
             position: relative;
         }
 
-        /* 요청하신 소문자 's' 적용 */
-        h1 { 
-            font-size: 3rem; 
-            margin-bottom: 10px; 
-            font-weight: 700; 
-            letter-spacing: 1px; 
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
-        }
-        
-        p { 
-            font-size: 1.2rem; 
-            color: #e0e0e0; 
-            text-shadow: 0 1px 5px rgba(0,0,0,0.5); 
-        }
+        h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 700; letter-spacing: 1px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
 
-        /* 음악 위젯 컨테이너 */
+        /* 음악 위젯 */
         .music-widget {
-            position: absolute; 
-            top: 20px; 
-            right: 30px;
+            position: absolute; top: 20px; right: 30px;
             background: rgba(0, 0, 0, 0.6); 
-            padding: 10px 25px; 
-            border-radius: 30px;
+            padding: 10px 25px; border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px); 
-            z-index: 1000;
-            display: flex; 
-            gap: 20px; 
-            align-items: center;
+            backdrop-filter: blur(10px); z-index: 1000;
+            display: flex; gap: 20px; align-items: center;
         }
         
-        /* 무드 선택 버튼 그룹 */
-        .music-mood-btns {
-            display: flex; 
-            gap: 15px;
-        }
-        
+        /* 무드 선택 버튼 */
+        .music-mood-btns { display: flex; gap: 15px; }
         .mood-btn {
-            background: transparent; 
-            border: none;
-            color: #888; /* 기본: 회색 */
-            font-size: 0.9rem; 
-            font-weight: 500; 
-            cursor: pointer;
-            padding: 4px 0; 
-            transition: all 0.3s ease;
+            background: transparent; border: none; color: #888;
+            font-size: 0.9rem; font-weight: 500; cursor: pointer;
+            padding: 4px 0; transition: all 0.3s ease;
         }
-        
-        .mood-btn:hover { 
-            color: #ccc; 
-        }
-        
-        /* 선택된 버튼 강조 스타일 */
-        .mood-btn.active { 
-            color: #fff; 
-            font-weight: 700; 
-            border-bottom: 2px solid #fff; 
-        }
+        .mood-btn:hover { color: #ccc; }
+        .mood-btn.active { color: #fff; font-weight: 700; border-bottom: 2px solid #fff; }
 
-        /* 재생 버튼 스타일 */
+        /* 재생 버튼 */
         #play-btn {
-            background: rgba(255,255,255,0.1); 
-            color: #fff; 
+            background: rgba(255,255,255,0.1); color: #fff; 
             border: 1px solid rgba(255,255,255,0.3);
-            padding: 8px 18px; 
-            border-radius: 20px;
-            cursor: pointer; 
-            font-size: 0.85rem; 
-            font-weight: bold;
+            padding: 8px 18px; border-radius: 20px;
+            cursor: pointer; font-size: 0.85rem; font-weight: bold;
             transition: all 0.3s ease;
         }
-        
-        #play-btn:hover { 
-            background: #fff; 
-            color: #000; 
-        }
-        
+        #play-btn:hover { background: #fff; color: #000; }
         #play-btn.playing {
-            background: #e2a8a8; 
-            border-color: #e2a8a8; 
-            color: #000;
+            background: #e2a8a8; border-color: #e2a8a8; color: #000;
             animation: pulse 2s infinite;
         }
-        
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(226, 168, 168, 0.6); }
             70% { box-shadow: 0 0 0 8px rgba(226, 168, 168, 0); }
@@ -122,132 +63,46 @@
         }
 
         /* ==============================
-           3. 3단 필터 영역
+           3. 3단 필터
            ============================== */
-        .filter-section { 
-            padding: 30px 40px; 
-            background-color: #1a1a1a; 
-            border-bottom: 1px solid #333; 
-        }
-        
-        .filter-row { 
-            display: flex; 
-            align-items: center; 
-            margin-bottom: 20px; 
-            flex-wrap: wrap; 
-        }
-        
-        .filter-label { 
-            width: 80px; 
-            font-size: 0.85rem; 
-            color: #666; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-        }
-        
-        .filter-group { 
-            display: flex; 
-            gap: 10px; 
-            flex-wrap: wrap; 
-        }
-        
+        .filter-section { padding: 30px 40px; background-color: #1a1a1a; border-bottom: 1px solid #333; }
+        .filter-row { display: flex; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .filter-label { width: 80px; font-size: 0.85rem; color: #666; font-weight: bold; text-transform: uppercase; }
+        .filter-group { display: flex; gap: 10px; flex-wrap: wrap; }
         .filter-btn {
-            background: #333; 
-            border: 1px solid #444; 
-            color: #ccc;
-            padding: 8px 16px; 
-            border-radius: 15px; 
-            cursor: pointer; 
-            font-size: 0.9rem;
+            background: #333; border: 1px solid #444; color: #ccc;
+            padding: 8px 16px; border-radius: 15px; cursor: pointer; font-size: 0.9rem;
             transition: all 0.2s ease;
         }
-        
-        .filter-btn:hover, .filter-btn.active { 
-            background: #fff; 
-            color: #000; 
-            border-color: #fff; 
-        }
+        .filter-btn:hover, .filter-btn.active { background: #fff; color: #000; border-color: #fff; }
 
         /* ==============================
-           4. 갤러리 그리드 영역
+           4. 갤러리 그리드
            ============================== */
         .gallery-grid {
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px; 
-            padding: 40px; 
-            min-height: 50vh;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px; padding: 40px; min-height: 50vh;
         }
-        
-        .gallery-item { 
-            background: #1e1e1e; 
-            border-radius: 8px; 
-            overflow: hidden; 
-            transition: transform 0.3s ease; 
-        }
-        
-        .gallery-item:hover { 
-            transform: translateY(-5px); 
-        }
-        
-        .gallery-item img { 
-            width: 100%; 
-            height: 250px; 
-            object-fit: cover; 
-            display: block; 
-        }
-        
-        .info { 
-            padding: 20px; 
-        }
-        
-        .info h3 { 
-            margin: 0 0 10px 0; 
-            font-size: 1.1rem; 
-            color: #fff; 
-        }
-        
-        .tags-row { 
-            display: flex; 
-            gap: 8px; 
-            flex-wrap: wrap; 
-        }
-        
-        .tag-badge { 
-            font-size: 0.75rem; 
-            padding: 4px 10px; 
-            border-radius: 4px; 
-            color: #000; 
-            font-weight: 600; 
-        }
-        
+        .gallery-item { background: #1e1e1e; border-radius: 8px; overflow: hidden; transition: transform 0.3s ease; }
+        .gallery-item:hover { transform: translateY(-5px); }
+        .gallery-item img { width: 100%; height: 250px; object-fit: cover; display: block; }
+        .info { padding: 20px; }
+        .info h3 { margin: 0 0 10px 0; font-size: 1.1rem; color: #fff; }
+        .tags-row { display: flex; gap: 8px; flex-wrap: wrap; }
+        .tag-badge { font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; color: #000; font-weight: 600; }
         .tag-space { background-color: #a8d5e2; }
         .tag-vibe { background-color: #e2a8a8; }
         .tag-detail { background-color: #dbe2a8; }
 
         /* ==============================
-           5. 푸터 영역
+           5. 푸터
            ============================== */
         footer {
-            background-color: #000000; 
-            color: #333333; 
-            text-align: center;
-            padding: 80px 20px; 
-            font-size: 0.85rem; 
-            letter-spacing: 0.5px;
+            background-color: #000000; color: #333333; text-align: center;
+            padding: 80px 20px; font-size: 0.85rem; letter-spacing: 0.5px;
         }
-        
-        footer a { 
-            color: #333333; 
-            text-decoration: none; 
-            border-bottom: 1px solid #333; 
-            transition: color 0.3s; 
-        }
-        
-        footer a:hover { 
-            color: #666; 
-            border-color: #666; 
-        }
+        footer a { color: #333333; text-decoration: none; border-bottom: 1px solid #333; transition: color 0.3s; }
+        footer a:hover { color: #666; border-color: #666; }
     </style>
 </head>
 <body>
@@ -270,21 +125,15 @@
     <div class="filter-section">
         <div class="filter-row">
             <span class="filter-label">Space</span>
-            <div class="filter-group" id="filter-space">
-                <button class="filter-btn active" onclick="filterGallery('space', 'all')">All</button>
-            </div>
+            <div class="filter-group" id="filter-space"><button class="filter-btn active" onclick="filterGallery('space', 'all')">All</button></div>
         </div>
         <div class="filter-row">
             <span class="filter-label">Vibe</span>
-            <div class="filter-group" id="filter-vibe">
-                <button class="filter-btn active" onclick="filterGallery('vibe', 'all')">All</button>
-            </div>
+            <div class="filter-group" id="filter-vibe"><button class="filter-btn active" onclick="filterGallery('vibe', 'all')">All</button></div>
         </div>
         <div class="filter-row">
             <span class="filter-label">Detail</span>
-            <div class="filter-group" id="filter-detail">
-                <button class="filter-btn active" onclick="filterGallery('detail', 'all')">All</button>
-            </div>
+            <div class="filter-group" id="filter-detail"><button class="filter-btn active" onclick="filterGallery('detail', 'all')">All</button></div>
         </div>
     </div>
 
@@ -296,17 +145,16 @@
 
     <script>
         // ============================================================
-        // 1. 유튜브 뮤직 설정 (랜덤 재생 기능 포함)
+        // 1. 유튜브 뮤직 설정 (ID 확인 필수!)
         // ============================================================
         
-        // 📢 [수정필요] 여기에 PL로 시작하는 재생목록 ID를 넣어주세요.
+        // 📢 [중요] 여기 ID들을 다시 한 번 확인해주세요!
         const playlists = {
-            'jazz': 'PLxjckBrY2dKgyFDHw95kUds2DaCYJJzkY',    
-            'chill': 'PLxjckBrY2dKjv04slgG3W39D0nyVdYYoK',   
-            'classic': 'PLxjckBrY2dKgh7NE23RMnP7GBOJsSR2Jf'  
+            'jazz': 'PLxjckBrY2dKgyFDHw95kUds2DaCYJJzkY',    // Jazz Playlist ID
+            'chill': 'PLxjckBrY2dKjv04slgG3W39D0nyVdYYoK',   // Chill Playlist ID
+            'classic': 'PLxjckBrY2dKgh7NE23RMnP7GBOJsSR2Jf'  // Classic Playlist ID
         };
 
-        // 유튜브 API 로드
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -314,12 +162,11 @@
 
         var player;
         var currentMood = 'jazz';
-        var isPlaying = false;
+        // 'isPlaying' 변수 대신, 플레이어의 실제 상태를 확인합니다.
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
-                height: '0', 
-                width: '0',
+                height: '0', width: '0',
                 playerVars: { 
                     'listType': 'playlist', 
                     'list': playlists[currentMood], 
@@ -327,167 +174,125 @@
                     'loop': 1 
                 },
                 events: { 
-                    'onReady': onPlayerReady 
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange, // 상태 변화 감지
+                    'onError': onPlayerError              // 에러 감지
                 }
             });
         }
 
-        // 플레이어 준비 완료 시 실행 (셔플 설정)
         function onPlayerReady(event) {
             event.target.setShuffle({'shufflePlaylist': true});
         }
 
-        // 재생 / 일시정지 토글
-        function toggleMusic() {
-            var btn = document.getElementById('play-btn');
-            if (isPlaying) {
-                player.pauseVideo();
-                btn.innerText = "▶ Play";
-                btn.classList.remove('playing');
-                isPlaying = false;
-            } else {
-                // 재생 시 셔플된 다음 곡으로 넘겨서 자연스럽게 시작
-                player.playVideoAt(0); 
-                player.playVideo();
-                btn.innerText = "⏸ Pause";
-                btn.classList.add('playing');
-                isPlaying = true;
+        // 🚨 에러 처리 (왜 안 나오는지 알려줌)
+        function onPlayerError(event) {
+            console.error("YouTube Player Error:", event.data);
+            if(event.data === 150 || event.data === 101) {
+                alert("🚫 이 재생목록은 외부 사이트 재생이 금지되어 있습니다. (소유자 설정)");
+            } else if(event.data === 100) {
+                alert("🚫 재생목록이 비공개이거나 삭제되었습니다.");
+            }
+            updateButtonState(false); // 버튼을 '정지' 상태로 돌림
+        }
+
+        // 🔄 상태 변화 감지 (플레이어가 멈추면 버튼도 자동으로 바뀜)
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING) {
+                updateButtonState(true);
+            } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+                updateButtonState(false);
             }
         }
 
-        // 무드(장르) 변경 함수
+        // 버튼 UI 업데이트 함수
+        function updateButtonState(isPlaying) {
+            var btn = document.getElementById('play-btn');
+            if (isPlaying) {
+                btn.innerText = "⏸ Pause";
+                btn.classList.add('playing');
+            } else {
+                btn.innerText = "▶ Play";
+                btn.classList.remove('playing');
+            }
+        }
+
+        // 재생/정지 버튼 클릭 시
+        function toggleMusic() {
+            if (!player || !player.getPlayerState) return;
+            var state = player.getPlayerState();
+            
+            if (state == YT.PlayerState.PLAYING) {
+                player.pauseVideo();
+            } else {
+                player.playVideo();
+            }
+        }
+
+        // 무드 변경 함수
         function changeMood(mood, btnElement) {
-            // 1. 버튼 스타일 변경 (클릭한 버튼만 활성화)
             document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
             btnElement.classList.add('active');
 
-            // 2. 플레이어 리스트 교체
             currentMood = mood;
             if (playlists[currentMood]) {
-                player.loadPlaylist({ 
-                    list: playlists[currentMood], 
-                    listType: 'playlist' 
-                });
+                // 현재 재생 중인지 확인
+                var isPlayingNow = (player.getPlayerState() == YT.PlayerState.PLAYING);
                 
-                // 3. 리스트 교체 후 다시 셔플 적용
-                player.setShuffle({'shufflePlaylist': true});
-                
-                if (isPlaying) {
-                    player.playVideo();
+                if (isPlayingNow) {
+                    // 재생 중이면 -> 바로 로드하고 재생 (loadPlaylist)
+                    player.loadPlaylist({ list: playlists[currentMood], listType: 'playlist' });
                 } else {
-                    player.stopVideo();
+                    // 정지 중이면 -> 로드만 하고 대기 (cuePlaylist)
+                    player.cuePlaylist({ list: playlists[currentMood], listType: 'playlist' });
                 }
+                
+                // 셔플 다시 적용
+                setTimeout(() => player.setShuffle({'shufflePlaylist': true}), 1000);
             }
         }
 
 
         // ============================================================
-        // 2. 갤러리 & 필터 로직 (JSON 데이터 처리)
+        // 2. 갤러리 로직 (동일)
         // ============================================================
-        
         let allData = [];
         let currentFilters = { space: 'all', vibe: 'all', detail: 'all' };
 
-        // 데이터 불러오기
-        fetch('data.json')
-            .then(response => response.json())
-            .then(data => {
-                allData = data;
-                
-                // 최신 이미지를 헤더 배경으로 설정
-                if(data.length > 0) {
-                    document.getElementById('main-header').style.backgroundImage = 
-                        `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('${data[0].img}')`;
-                }
+        fetch('data.json').then(r => r.json()).then(d => {
+            allData = d;
+            if(d.length > 0) document.getElementById('main-header').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), url('${d[0].img}')`;
+            generateFilters(d); renderGallery(d);
+        });
 
-                generateFilters(data);
-                renderGallery(data);
-            })
-            .catch(error => console.error('Error loading data:', error));
-
-        // 필터 버튼 자동 생성
         function generateFilters(data) {
-            const spaces = new Set();
-            const vibes = new Set();
-            const details = new Set();
-
-            data.forEach(item => {
-                if (item.space) spaces.add(item.space);
-                if (item.vibe) vibes.add(item.vibe);
-                if (item.detail) details.add(item.detail);
-                // 구형 태그 호환성
-                if (item.tags && !item.space) {
-                    item.tags.split('|').forEach(t => spaces.add(t.trim()));
-                }
-            });
-
-            createButtons('filter-space', spaces, 'space');
-            createButtons('filter-vibe', vibes, 'vibe');
-            createButtons('filter-detail', details, 'detail');
+            const s=new Set(), v=new Set(), d=new Set();
+            data.forEach(i => { if(i.space)s.add(i.space); if(i.vibe)v.add(i.vibe); if(i.detail)d.add(i.detail); if(i.tags&&!i.space)i.tags.split('|').forEach(t=>s.add(t.trim())); });
+            createButtons('filter-space', s, 'space'); createButtons('filter-vibe', v, 'vibe'); createButtons('filter-detail', d, 'detail');
         }
-
-        // 버튼 HTML 만들기
-        function createButtons(containerId, tagSet, type) {
-            const container = document.getElementById(containerId);
-            tagSet.forEach(tag => {
-                const btn = document.createElement('button');
-                btn.className = 'filter-btn';
-                btn.innerText = tag;
-                btn.onclick = (e) => {
-                    container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    filterGallery(type, tag);
-                };
-                container.appendChild(btn);
+        function createButtons(cId, set, type) {
+            const c = document.getElementById(cId);
+            set.forEach(tag => {
+                const b = document.createElement('button'); b.className = 'filter-btn'; b.innerText = tag;
+                b.onclick = (e) => { c.querySelectorAll('.filter-btn').forEach(btn=>btn.classList.remove('active')); e.target.classList.add('active'); filterGallery(type, tag); };
+                c.appendChild(b);
             });
         }
-
-        // 필터링 로직 (3단 필터 AND 조건)
-        function filterGallery(type, value) {
-            currentFilters[type] = value;
-
-            const filtered = allData.filter(item => {
-                const matchSpace = (currentFilters.space === 'all') || 
-                                   (item.space === currentFilters.space) || 
-                                   (item.tags && item.tags.includes(currentFilters.space));
-                
-                const matchVibe = (currentFilters.vibe === 'all') || 
-                                  (item.vibe === currentFilters.vibe);
-                
-                const matchDetail = (currentFilters.detail === 'all') || 
-                                    (item.detail === currentFilters.detail);
-
-                return matchSpace && matchVibe && matchDetail;
-            });
-
-            renderGallery(filtered);
+        function filterGallery(type, val) {
+            currentFilters[type] = val;
+            renderGallery(allData.filter(i => 
+                ((currentFilters.space==='all')||(i.space===currentFilters.space)||(i.tags&&i.tags.includes(currentFilters.space))) &&
+                ((currentFilters.vibe==='all')||(i.vibe===currentFilters.vibe)) &&
+                ((currentFilters.detail==='all')||(i.detail===currentFilters.detail))
+            ));
         }
-
-        // 화면 그리기
         function renderGallery(items) {
-            const grid = document.getElementById('gallery-grid');
-            grid.innerHTML = '';
-            
-            items.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'gallery-item';
-                
-                let tagsHtml = '';
-                if(item.space) tagsHtml += `<span class="tag-badge tag-space">${item.space}</span>`;
-                if(item.vibe) tagsHtml += `<span class="tag-badge tag-vibe">${item.vibe}</span>`;
-                if(item.detail) tagsHtml += `<span class="tag-badge tag-detail">${item.detail}</span>`;
-                if(item.tags && !item.space) tagsHtml += `<span class="tag-badge tag-space">${item.tags}</span>`;
-
-                div.innerHTML = `
-                    <a href="${item.img}" target="_blank">
-                        <img src="${item.img}" alt="${item.title}" loading="lazy">
-                    </a>
-                    <div class="info">
-                        <h3>${item.title}</h3>
-                        <div class="tags-row">${tagsHtml}</div>
-                    </div>
-                `;
-                grid.appendChild(div);
+            const g = document.getElementById('gallery-grid'); g.innerHTML = '';
+            items.forEach(i => {
+                const d = document.createElement('div'); d.className = 'gallery-item';
+                let h = ''; if(i.space)h+=`<span class="tag-badge tag-space">${i.space}</span>`; if(i.vibe)h+=`<span class="tag-badge tag-vibe">${i.vibe}</span>`; if(i.detail)h+=`<span class="tag-badge tag-detail">${i.detail}</span>`; if(i.tags&&!i.space)h+=`<span class="tag-badge tag-space">${i.tags}</span>`;
+                d.innerHTML = `<a href="${i.img}" target="_blank"><img src="${i.img}" alt="${i.title}" loading="lazy"></a><div class="info"><h3>${i.title}</h3><div class="tags-row">${h}</div></div>`;
+                g.appendChild(d);
             });
         }
     </script>
