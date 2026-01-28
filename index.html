@@ -5,22 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sconee Archive</title>
     <style>
+        /* --- 1. 기본 스타일 --- */
         body { margin: 0; padding: 0; background-color: #121212; color: #ffffff; font-family: 'Helvetica Neue', sans-serif; }
         
+        /* --- 2. 헤더 & 음악 위젯 --- */
         header { 
             height: 50vh; 
             background-size: cover; background-position: center;
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            position: relative;
         }
-        h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 700; letter-spacing: 1px; }
-        p { font-size: 1.2rem; color: #cccccc; }
+        h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 700; letter-spacing: 1px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
 
-        /* --- 3단 필터 스타일 --- */
+        /* 음악 위젯 디자인 */
+        .music-widget {
+            position: absolute; top: 20px; right: 30px;
+            background: rgba(0, 0, 0, 0.65);
+            padding: 8px 15px; border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px); z-index: 1000;
+            display: flex; gap: 10px; align-items: center;
+        }
+        #mood-select {
+            background: transparent; border: none; color: #ddd;
+            font-size: 0.85rem; font-weight: 500; cursor: pointer;
+            outline: none; text-align: right;
+        }
+        #mood-select option { background: #333; color: #fff; }
+        #play-btn {
+            background: #fff; color: #000; border: none;
+            padding: 6px 14px; border-radius: 20px;
+            cursor: pointer; font-size: 0.8rem; font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        #play-btn:hover { transform: scale(1.05); }
+        #play-btn.playing { background: #e2a8a8; animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(226, 168, 168, 0.6); }
+            70% { box-shadow: 0 0 0 8px rgba(226, 168, 168, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(226, 168, 168, 0); }
+        }
+
+        /* --- 3. 3단 필터 --- */
         .filter-section { padding: 20px 40px; background-color: #1a1a1a; border-bottom: 1px solid #333; }
         .filter-row { display: flex; align-items: center; margin-bottom: 15px; flex-wrap: wrap; }
-        .filter-label { width: 80px; font-size: 0.8rem; color: #666; font-weight: bold; text-transform: uppercase; }
+        .filter-label { width: 80px; font-size: 0.8rem; color: #888; font-weight: bold; text-transform: uppercase; }
         .filter-group { display: flex; gap: 8px; flex-wrap: wrap; }
-        
         .filter-btn {
             background: #333; border: 1px solid #444; color: #ccc;
             padding: 6px 14px; border-radius: 15px; cursor: pointer; font-size: 0.85rem;
@@ -28,9 +59,10 @@
         }
         .filter-btn:hover, .filter-btn.active { background: #fff; color: #000; border-color: #fff; }
 
+        /* --- 4. 갤러리 그리드 --- */
         .gallery-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px; padding: 40px;
+            gap: 20px; padding: 40px; min-height: 50vh;
         }
         .gallery-item { background: #1e1e1e; border-radius: 8px; overflow: hidden; transition: transform 0.3s ease; }
         .gallery-item:hover { transform: translateY(-5px); }
@@ -39,9 +71,21 @@
         .info h3 { margin: 0 0 8px 0; font-size: 1.1rem; color: #fff; }
         .tags-row { display: flex; gap: 6px; flex-wrap: wrap; }
         .tag-badge { font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; color: #000; font-weight: 600; }
-        .tag-space { background-color: #a8d5e2; } /* 파란색: 공간 */
-        .tag-vibe { background-color: #e2a8a8; }  /* 빨간색: 분위기 */
-        .tag-detail { background-color: #dbe2a8; } /* 노란색: 디테일 */
+        .tag-space { background-color: #a8d5e2; }
+        .tag-vibe { background-color: #e2a8a8; }
+        .tag-detail { background-color: #dbe2a8; }
+
+        /* --- 5. 푸터 (요청하신 하단 문구) --- */
+        footer {
+            background-color: #000000; /* 완전 검정 */
+            color: #333333;            /* 아주 어두운 회색 (명도 3단계 업) */
+            text-align: center;
+            padding: 60px 20px;        /* 여백 넉넉히 */
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+        footer a { color: #333333; text-decoration: none; border-bottom: 1px solid #333; transition: color 0.3s; }
+        footer a:hover { color: #666; border-color: #666; }
     </style>
 </head>
 <body>
@@ -49,32 +93,95 @@
     <header id="main-header">
         <h1>Sconee Archive</h1>
         <p>Curated Inspiration for Space & Design</p>
+
+        <div class="music-widget">
+            <select id="mood-select" onchange="changeMood()">
+                <option value="jazz">🎷 Jazz Vibe</option>
+                <option value="chill">☕ Chillout</option>
+                <option value="classic">🎻 Classic</option>
+            </select>
+            <button id="play-btn" onclick="toggleMusic()">▶ Play</button>
+            <div id="youtube-player" style="display: none;"></div>
+        </div>
     </header>
 
     <div class="filter-section">
         <div class="filter-row">
             <span class="filter-label">Space</span>
-            <div class="filter-group" id="filter-space">
-                <button class="filter-btn active" onclick="filterGallery('space', 'all')">All</button>
-            </div>
+            <div class="filter-group" id="filter-space"><button class="filter-btn active" onclick="filterGallery('space', 'all')">All</button></div>
         </div>
         <div class="filter-row">
             <span class="filter-label">Vibe</span>
-            <div class="filter-group" id="filter-vibe">
-                <button class="filter-btn active" onclick="filterGallery('vibe', 'all')">All</button>
-            </div>
+            <div class="filter-group" id="filter-vibe"><button class="filter-btn active" onclick="filterGallery('vibe', 'all')">All</button></div>
         </div>
         <div class="filter-row">
             <span class="filter-label">Detail</span>
-            <div class="filter-group" id="filter-detail">
-                <button class="filter-btn active" onclick="filterGallery('detail', 'all')">All</button>
-            </div>
+            <div class="filter-group" id="filter-detail"><button class="filter-btn active" onclick="filterGallery('detail', 'all')">All</button></div>
         </div>
     </div>
 
     <div class="gallery-grid" id="gallery-grid"></div>
 
+    <footer>
+        If you have any inquiry, send email to <a href="mailto:sconee9@gmail.com">sconee9@gmail.com</a>
+    </footer>
+
     <script>
+        // ==============================
+        // 1. 유튜브 설정 (꼭 재생목록 ID로 넣어주세요!)
+        // ==============================
+        const playlists = {
+            'jazz': 'tpQug5KNpc4',    // [주의] 여기에 PL로 시작하는 ID 넣기
+            'chill': 'IRZxjJ08rLg',   // [주의] 여기에 PL로 시작하는 ID 넣기
+            'classic': 'j5PzAGPDuTc'  // [주의] 여기에 PL로 시작하는 ID 넣기
+        };
+
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        var currentMood = 'jazz';
+        var isPlaying = false;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0', width: '0',
+                playerVars: { 'listType': 'playlist', 'list': playlists[currentMood], 'autoplay': 0, 'loop': 1 },
+                events: { 'onReady': onPlayerReady }
+            });
+        }
+        function onPlayerReady(event) {}
+
+        function toggleMusic() {
+            var btn = document.getElementById('play-btn');
+            if (isPlaying) {
+                player.pauseVideo();
+                btn.innerText = "▶ Play";
+                btn.classList.remove('playing');
+                isPlaying = false;
+            } else {
+                player.playVideo();
+                btn.innerText = "⏸ Pause";
+                btn.classList.add('playing');
+                isPlaying = true;
+            }
+        }
+
+        function changeMood() {
+            var selector = document.getElementById('mood-select');
+            currentMood = selector.value;
+            if (playlists[currentMood]) {
+                player.loadPlaylist({ list: playlists[currentMood], listType: 'playlist' });
+                if (isPlaying) player.playVideo();
+                else player.stopVideo();
+            }
+        }
+
+        // ==============================
+        // 2. 갤러리 로직
+        // ==============================
         let allData = [];
         let currentFilters = { space: 'all', vibe: 'all', detail: 'all' };
 
@@ -91,22 +198,13 @@
             });
 
         function generateFilters(data) {
-            const spaces = new Set();
-            const vibes = new Set();
-            const details = new Set();
-
+            const spaces = new Set(); const vibes = new Set(); const details = new Set();
             data.forEach(item => {
-                // 새 데이터 형식(space/vibe/detail)과 옛날 형식(tags) 모두 처리
                 if (item.space) spaces.add(item.space);
                 if (item.vibe) vibes.add(item.vibe);
                 if (item.detail) details.add(item.detail);
-                
-                // 옛날 데이터(tags 문자열) 처리 - 대충 Space로 넣어줌
-                if (item.tags && !item.space) {
-                    item.tags.split('|').forEach(t => spaces.add(t.trim()));
-                }
+                if (item.tags && !item.space) item.tags.split('|').forEach(t => spaces.add(t.trim()));
             });
-
             createButtons('filter-space', spaces, 'space');
             createButtons('filter-vibe', vibes, 'vibe');
             createButtons('filter-detail', details, 'detail');
@@ -119,7 +217,6 @@
                 btn.className = 'filter-btn';
                 btn.innerText = tag;
                 btn.onclick = (e) => {
-                    // 버튼 활성화 스타일
                     container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                     e.target.classList.add('active');
                     filterGallery(type, tag);
@@ -129,35 +226,22 @@
         }
 
         function filterGallery(type, value) {
-            currentFilters[type] = value; // 선택한 필터 저장
-
+            currentFilters[type] = value;
             const filtered = allData.filter(item => {
-                // 3가지 조건이 모두 맞아야 함 (AND 조건)
-                const matchSpace = (currentFilters.space === 'all') || 
-                                   (item.space === currentFilters.space) || 
-                                   (item.tags && item.tags.includes(currentFilters.space));
-                
-                const matchVibe = (currentFilters.vibe === 'all') || 
-                                  (item.vibe === currentFilters.vibe);
-                
-                const matchDetail = (currentFilters.detail === 'all') || 
-                                    (item.detail === currentFilters.detail);
-
+                const matchSpace = (currentFilters.space === 'all') || (item.space === currentFilters.space) || (item.tags && item.tags.includes(currentFilters.space));
+                const matchVibe = (currentFilters.vibe === 'all') || (item.vibe === currentFilters.vibe);
+                const matchDetail = (currentFilters.detail === 'all') || (item.detail === currentFilters.detail);
                 return matchSpace && matchVibe && matchDetail;
             });
-
             renderGallery(filtered);
         }
 
         function renderGallery(items) {
             const grid = document.getElementById('gallery-grid');
             grid.innerHTML = '';
-            
             items.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'gallery-item';
-                
-                // 태그 뱃지 만들기
                 let tagsHtml = '';
                 if(item.space) tagsHtml += `<span class="tag-badge tag-space">${item.space}</span>`;
                 if(item.vibe) tagsHtml += `<span class="tag-badge tag-vibe">${item.vibe}</span>`;
@@ -165,13 +249,8 @@
                 if(item.tags && !item.space) tagsHtml += `<span class="tag-badge tag-space">${item.tags}</span>`;
 
                 div.innerHTML = `
-                    <a href="${item.img}" target="_blank">
-                        <img src="${item.img}" alt="${item.title}" loading="lazy">
-                    </a>
-                    <div class="info">
-                        <h3>${item.title}</h3>
-                        <div class="tags-row">${tagsHtml}</div>
-                    </div>
+                    <a href="${item.img}" target="_blank"><img src="${item.img}" alt="${item.title}" loading="lazy"></a>
+                    <div class="info"><h3>${item.title}</h3><div class="tags-row">${tagsHtml}</div></div>
                 `;
                 grid.appendChild(div);
             });
