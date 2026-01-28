@@ -6,7 +6,7 @@
     <title>sconee Archive</title>
     <style>
         /* ==============================
-           1. 기본 스타일
+           1. 기본 스타일 (Dark Mode)
            ============================== */
         body { margin: 0; padding: 0; background-color: #121212; color: #ffffff; font-family: 'Helvetica Neue', sans-serif; }
         
@@ -23,7 +23,7 @@
         h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 700; letter-spacing: 1px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         p { font-size: 1.2rem; color: #e0e0e0; text-shadow: 0 1px 5px rgba(0,0,0,0.5); }
 
-        /* 음악 위젯 */
+        /* 음악 위젯 컨테이너 */
         .music-widget {
             position: absolute; top: 20px; right: 30px;
             background: rgba(0, 0, 0, 0.6); 
@@ -33,7 +33,7 @@
             display: flex; gap: 20px; align-items: center;
         }
         
-        /* 무드 선택 버튼 */
+        /* 장르 선택 버튼 (이모티콘 제거, 심플형) */
         .music-mood-btns { display: flex; gap: 15px; }
         .mood-btn {
             background: transparent; border: none; color: #888;
@@ -63,7 +63,7 @@
         }
 
         /* ==============================
-           3. 3단 필터
+           3. 3단 필터 영역
            ============================== */
         .filter-section { padding: 30px 40px; background-color: #1a1a1a; border-bottom: 1px solid #333; }
         .filter-row { display: flex; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
@@ -139,18 +139,18 @@
 
     <div class="gallery-grid" id="gallery-grid"></div>
 
-    <footer>If you have any inquiry, send email to <a href="mailto:sconee9@gmail.com">sconee9@gmail.com</a></footer>
+    <footer>
+        If you have any inquiry, send email to <a href="mailto:sconee9@gmail.com">sconee9@gmail.com</a>
+    </footer>
 
     <script>
         // ============================================================
-        // 1. 유튜브 뮤직 설정 (ID 확인 필수!)
+        // 1. 유튜브 뮤직 설정 (ID가 이미 적용되어 있습니다)
         // ============================================================
-        
-        // 📢 사장님, 아래 ID 3개가 서로 다른지 꼭 확인해주세요!
         const playlists = {
-            'jazz': 'PLxjckBrY2dKgyFDHw95kUds2DaCYJJzkY',    // Jazz ID
-            'chill': 'PLxjckBrY2dKjv04slgG3W39D0nyVdYYoK',   // Chill ID
-            'classic': 'PLxjckBrY2dKgh7NE23RMnP7GBOJsSR2Jf'  // Classic ID
+            'jazz': 'PLxjckBrY2dKgyFDHw95kUds2DaCYJJzkY',    // 사장님의 Jazz ID
+            'chill': 'PLxjckBrY2dKjv04slgG3W39D0nyVdYYoK',   // 사장님의 Chill ID
+            'classic': 'PLxjckBrY2dKgh7NE23RMnP7GBOJsSR2Jf'  // 사장님의 Classic ID
         };
 
         var tag = document.createElement('script');
@@ -169,8 +169,8 @@
                     'list': playlists[currentMood], 
                     'autoplay': 0, 
                     'loop': 1,
-                    'controls': 0, // 컨트롤러 숨김
-                    'rel': 0       // 관련 동영상 숨김
+                    'controls': 0, 
+                    'rel': 0       
                 },
                 events: { 
                     'onReady': onPlayerReady,
@@ -180,24 +180,23 @@
             });
         }
 
+        // [핵심] 준비되면 셔플 켜고 -> 다음 곡으로 넘겨버리기 (개수 적어도 섞임)
         function onPlayerReady(event) {
             event.target.setShuffle({'shufflePlaylist': true});
+            event.target.nextVideo(); 
         }
 
-        // 🚨 에러 처리
         function onPlayerError(event) {
             console.error("Player Error:", event.data);
             updateButtonState(false);
-            if(event.data === 150 || event.data === 101) alert("🚫 재생 불가 (저작권/비공개 설정 확인)");
+            if(event.data === 150 || event.data === 101) alert("🚫 재생 불가 (유튜브 설정 확인)");
         }
 
-        // 🔄 상태 변화 감지
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.PLAYING) updateButtonState(true);
             else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) updateButtonState(false);
         }
 
-        // 버튼 UI 업데이트
         function updateButtonState(isPlaying) {
             var btn = document.getElementById('play-btn');
             if (isPlaying) {
@@ -209,52 +208,37 @@
             }
         }
 
-        // ▶ Play/Pause 버튼 클릭
         function toggleMusic() {
             if (!player || !player.getPlayerState) return;
             var state = player.getPlayerState();
-            
-            if (state == YT.PlayerState.PLAYING) {
-                player.pauseVideo();
-            } else {
-                // 셔플이 확실히 먹히도록 다음 곡으로 넘기며 재생
-                if (player.getPlaylistIndex() == 0) player.playVideoAt(0);
-                else player.playVideo();
-            }
+            if (state == YT.PlayerState.PLAYING) player.pauseVideo();
+            else player.playVideo();
         }
 
-        // 🎵 무드(장르) 변경 - 여기가 핵심 수정 사항!
+        // [핵심] 장르 변경 로직
         function changeMood(mood, btnElement) {
-            // 1. 버튼 활성화
             document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
             btnElement.classList.add('active');
 
-            // 2. 같은 장르를 또 누르면 무시
             if (currentMood === mood) return; 
-
             currentMood = mood;
             
             if (playlists[currentMood]) {
-                // ✨ [핵심] 랜덤 시작 지점 계산 (0~20번 사이 랜덤)
-                // 이렇게 하면 매번 다른 노래가 나옵니다.
-                const randomStartIndex = Math.floor(Math.random() * 20);
-
-                // 3. 리스트를 새로 로드하면서 랜덤 위치에서 시작
                 player.loadPlaylist({
                     'list': playlists[currentMood],
-                    'listType': 'playlist',
-                    'index': randomStartIndex, // 여기서 랜덤 시작!
-                    'startSeconds': 0
+                    'listType': 'playlist'
                 });
 
-                // 4. 셔플도 한 번 더 적용
-                player.setShuffle({'shufflePlaylist': true});
+                // 리스트 로드 후 1초 뒤에 셔플 -> 다음 곡 (확실한 랜덤)
+                setTimeout(() => {
+                    player.setShuffle({'shufflePlaylist': true});
+                    player.nextVideo(); 
+                }, 1000);
             }
         }
 
-
         // ============================================================
-        // 2. 갤러리 로직 (동일)
+        // 2. 갤러리 로직
         // ============================================================
         let allData = [];
         let currentFilters = { space: 'all', vibe: 'all', detail: 'all' };
