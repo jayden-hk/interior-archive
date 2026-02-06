@@ -1,5 +1,40 @@
 [
   {
+    "title": "Aqua Rock Retreat",
+    "space": "Poolside Lounge",
+    "vibe": "Modern Organic Luxury",
+    "detail": "Wood, Stone & Aqua",
+    "img": "https://d31dpzy4bseog7.cloudfront.net/media/2024/02/26184034/Haldane-and-Tonic-from-Capensis-Product-Feature-The-Local-Project-Image-11.jpg"
+  },
+  {
+    "title": "Earthy Zen Display",
+    "space": "Home",
+    "vibe": "Zen Minimalist",
+    "detail": "Beige Ceramic, Charred Wood & Dark Grey",
+    "img": "https://d31dpzy4bseog7.cloudfront.net/media/2023/11/24160457/Terzofoco-by-Oliveri-Issue-13-Feature-The-Local-Project-Image-1.jpg"
+  },
+  {
+    "title": "Elegant Wood Joinery",
+    "space": "Home",
+    "vibe": "Luxury & Warm",
+    "detail": "Oak & Dark Wood",
+    "img": "https://d31dpzy4bseog7.cloudfront.net/media/2026/01/19132740/Dinesen-Apartment-by-David-Thulstrup-The-Local-Project-Image-12.jpg"
+  },
+  {
+    "title": "Serene Wood Daybed",
+    "space": "Home",
+    "vibe": "Minimalist",
+    "detail": "Light Wood & Beige",
+    "img": "https://d31dpzy4bseog7.cloudfront.net/media/2026/01/19133037/Dinesen-Apartment-by-David-Thulstrup-The-Local-Project-Image-30.jpg"
+  },
+  {
+    "title": "Tranquil Urban Dwelling",
+    "space": "Living Room & Dining Area",
+    "vibe": "Minimalist & Warm",
+    "detail": "Light Wood, Concrete & Green",
+    "img": "https://d31dpzy4bseog7.cloudfront.net/media/2026/01/19132647/Dinesen-Apartment-by-David-Thulstrup-The-Local-Project-Image-7.jpg"
+  },
+  {
     "title": "Modern Audiophile Display",
     "space": "Listening Nook",
     "vibe": "Modern Industrial",
