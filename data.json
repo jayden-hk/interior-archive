@@ -1,5 +1,26 @@
 [
   {
+    "title": "Stone Haven Bath",
+    "space": "Bathroom",
+    "vibe": "Natural Modern",
+    "detail": "Natural Stone, Concrete & Wood",
+    "img": "images/Seascape-by-Patterson-Associates-Book-Feature-The-Local-Project-Image-11.jpg"
+  },
+  {
+    "title": "Oceanfront Serenity",
+    "space": "Home",
+    "vibe": "Modern Luxury",
+    "detail": "Glass & Stone, Soft Sunset Tones",
+    "img": "images/Seascape-by-Patterson-Associates-Book-Feature-The-Local-Project-Image-1.jpg"
+  },
+  {
+    "title": "Teal Terrace Retreat",
+    "space": "Patio",
+    "vibe": "Vibrant Contemporary",
+    "detail": "Teal, Terracotta & Stone",
+    "img": "images/Haldane-and-Tonic-from-Capensis-Product-Feature-The-Local-Project-Image-6.jpg"
+  },
+  {
     "title": "Aqua Rock Retreat",
     "space": "Poolside Lounge",
     "vibe": "Modern Organic Luxury",
