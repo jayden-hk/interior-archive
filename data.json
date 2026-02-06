@@ -1,5 +1,26 @@
 [
   {
+    "title": "Verdant Concept Store",
+    "space": "Concept Store",
+    "vibe": "Modern Artistic",
+    "detail": "Textured Lime Green & Beige",
+    "img": "images/extreme-cashmere-FRAME___cover_1920_1282.jpg"
+  },
+  {
+    "title": "Modern Gallery Plaza",
+    "space": "Art Gallery Exterior",
+    "vibe": "Minimalist & Artistic",
+    "detail": "Translucent Panels, Concrete & Stone (Off-white, Grey)",
+    "img": "images/DIB-Bangkok---1___cover_1920_1443.jpg"
+  },
+  {
+    "title": "Sustainable Waterside Oasis",
+    "space": "Resort",
+    "vibe": "Eco-Modern Luxury",
+    "detail": "Green Roofs & Aqua Water",
+    "img": "images/001-Lotus-Clubhouse-by-MIA-Design-Studio-960x724.jpg"
+  },
+  {
     "title": "Modern Lakeside Living",
     "space": "Living Room",
     "vibe": "Modern, Cozy",
