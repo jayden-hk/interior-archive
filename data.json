@@ -1,5 +1,33 @@
 [
   {
+    "title": "Dune Oasis Lounge",
+    "space": "Outdoor Lounge",
+    "vibe": "Modern Coastal",
+    "detail": "Sage, Beige & Metal",
+    "img": "images/Image-3.jpg"
+  },
+  {
+    "title": "Stone Wall Serenity",
+    "space": "Bedroom",
+    "vibe": "Organic Modern",
+    "detail": "Stone & Natural Wood",
+    "img": "images/Image-21.jpg"
+  },
+  {
+    "title": "Cliffside Glass Sanctuary",
+    "space": "Home",
+    "vibe": "Modern Luxury",
+    "detail": "Glass, Stone & Warm Tones",
+    "img": "images/Image-18.jpg"
+  },
+  {
+    "title": "Patterned Lounge Comfort",
+    "space": "Lounge",
+    "vibe": "Contemporary",
+    "detail": "Woven Fabric, Navy & Terracotta",
+    "img": "images/Image-10.png"
+  },
+  {
     "title": "Stone Haven Bath",
     "space": "Bathroom",
     "vibe": "Natural Modern",

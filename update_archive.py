@@ -12,7 +12,7 @@ import time
 # ==========================================
 # 1. 설정 (API 키 확인!)
 # ==========================================
-API_KEY = "AIzaSyDDwOHwVn_ShCBfrLbEH_Qh8Irv30jopsU"
+API_KEY = "AIzaSyDDS9bCqH0FE9wNZhSvAMWDScHytvYYnUM"
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-2.5-flash') 
 
